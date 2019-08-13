@@ -1,0 +1,22 @@
+<snippet>
+	<content><![CDATA[
+using entity;
+using System.Collections.Generic;
+/// <summary>
+/// edit by zyx
+/// </summary>
+public class  ${1}Control : Control
+{
+    public  ${1}Model model;
+    public override void OnAppInit()
+    {
+        
+    }
+}
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>1control</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

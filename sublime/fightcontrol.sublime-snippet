@@ -1,0 +1,95 @@
+<snippet>
+	<content><![CDATA[
+using entity;
+using System.Collections.Generic;
+/// <summary>
+/// edit by zyx
+/// </summary>
+public class ${1}Control : SceneBehavior
+{
+    public  ${1}Model model;
+    public override void OnAppInit()
+    {
+        //PluginMM.scene.RegisterBehavior(entity.SceneDefs.SCENE_SORT_ID_3V3, this);
+    }
+
+    #region 重写接口
+    public override ReliveConf GetShowRelive()
+    {
+//         ReliveConf conf = new ReliveConf();
+//         conf.MoneyRelive = false;
+//         conf.AutoRelivePlace = 1;
+        return null;
+    }
+
+    //是否能攻击
+    public override bool IsCanAttack()
+    {
+        return true;
+    }
+
+    //是否能被攻击
+    public override bool IsCanBeAttack(ObjBehaviour obj)
+    {
+        return true;
+    }
+
+    //是否可移动
+    public override bool CanAction()
+    {
+        return true;
+    }
+
+
+    //一些ui配置
+    public override MainUIMode GetMainUIMode()
+    {
+        return MainUIMode.g3v3Scene;
+    }
+
+    //
+    public override MainButtonMode GetMainButtonMode()
+    {
+        return MainButtonMode.Leave;
+    }
+
+    //进入场景
+    public override void EnterScene()
+    {
+        VFWatcher.OnHit(this, "EnterScene");
+        Log.LogInfo("enter scene 3v3");
+        //model.SendGetState();//获取状态
+    }
+
+    public override void LeaveScene()
+    {
+        base.LeaveScene();
+    }
+
+    //获取敌友
+    public override ObjCampType GetCamp(ObjData self, ObjData target)
+    {
+        if (self.zhenyin != target.zhenyin)
+        {
+            return ObjCampType.Enemy;
+        }
+        else
+        {
+            return ObjCampType.Friend;
+        }
+    }
+
+    #endregion
+
+
+    #region 对外接口
+    #endregion
+
+}
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>1controlfight</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

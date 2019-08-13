@@ -1,0 +1,45 @@
+<snippet>
+	<content><![CDATA[
+using UnityEngine;
+using System.Collections;
+using mygui2;
+using UnityEngine.UI;
+using entity;
+using System.Collections.Generic;
+
+/// <summary>
+/// edit by zyx 
+/// </summary>
+public class ${1}Panel : MyPanel2
+{
+    public ${1}Panel()
+        : base("qishi_select")
+    {
+        _hide_when_click_outside = true;
+        _show_mode = ShowMode.Modal;
+        _background_mode = BackgroundMode.SolidColor;
+    }
+
+    protected override void OnInit()
+    {
+    }
+
+    protected override void OnShow()
+    {
+        updateview();
+    }
+
+     void updateview()
+    {
+    }
+
+    protected override void OnClick(string id)
+    {
+    }
+ }
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>1panel</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

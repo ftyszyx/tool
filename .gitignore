@@ -1,0 +1,7 @@
+/redbook/dist
+/redbook/build
+/redbook/common/*.pyc
+/redbook/common/__pycache__
+/getdoc/pandoc-2.4-windows-x86_64.msi
+/wechat/res
+/wechat/venv

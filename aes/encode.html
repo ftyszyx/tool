@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+	<title>在线加密解密</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=Utf8" />
+	<meta http-equiv="Content-Language" content="zh-CN" />
+	<link rel="stylesheet" href="./css/base.css" type="text/css" />
+	<script type="text/javascript" src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+	<!--     头部header结束    -->
+	<script type="text/javascript" src="./js/cryptojs/components/core-min.js"></script>
+	<script type="text/javascript" src="./js/cryptojs/rollups/aes.js"></script>
+	<script type="text/javascript" src="./js/cryptojs/rollups/tripledes.js"></script>
+	<script type="text/javascript" src="./js/cryptojs/rollups/rabbit.js"></script>
+	<script type="text/javascript" src="./js/cryptojs/rollups/rc4.js"></script>
+	<div id="mainContent" class="wrapper">
+		<div class="toolName">在线加密解密(采用
+			<a id="crypto" href="http://www.oschina.net/p/crypto-js">Crypto-JS</a>实现)
+			<a data-toggle="modal" href="#advice" style="float:right;text-decoration:none;">
+			</a>
+		</div>
+		<div class="toolUsing clearfix">
+			<div class="leftBar">
+				<div class="title">明文:</div>
+				<textarea name='message' id='msg_source' value="this is a example" onfocus="if(this.value=='this is a example'){this.value='';};this.select();"
+				 onblur="(this.value=='')?this.value='this is a example':this.value;" class="text_source">this is a example</textarea>
+			</div>
+
+			<div class="operateLR">
+				<div class="OptDetail">
+					<label>加密算法:</label>
+					<ul>
+						<li>
+							<label for="aes" class="radio">
+								<input type="radio" name="encrypt_type" value="aes" checked="checked" id="aes" />AES</label>
+						</li>
+						<li>
+							<label for="des" class="radio">
+								<input type="radio" name="encrypt_type" value="des" id="des" />DES</label>
+						</li>
+						<li>
+							<label for="rc4" class="radio">
+								<input type="radio" name="encrypt_type" value="rc4" id="rc4" />RC4</label>
+						</li>
+						<li>
+							<label for="rabbit" class="radio">
+								<input type="radio" name="encrypt_type" value="rabbit" id="rabbit" />Rabbit</label>
+						</li>
+						<li>
+							<label for="tripledes" class="radio">
+								<input type="radio" name="encrypt_type" value="tripledes" id="tripledes" />TripleDes</label>
+						</li>
+					</ul>
+				</div>
+				<div class="OptDetail Button">
+
+					<label class="input">密码:
+						<input type="text" id="pwd" />
+					</label>
+					<ul>
+						<li>
+							<button class="btn btn-primary" onclick="javascript:encrypt();">加密
+								<i class="icon-chevron-right icon-white"></i>
+							</button>
+						</li>
+						<li>
+							<button class="btn btn-primary" onclick="javascript:decrypt();">
+								<i class="icon-chevron-left icon-white"></i> 解密 </button>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="rightBar">
+				<div class="title">密文:</div>
+				<textarea name='cipher' id='encrypt_result' onclick="this.focus();this.select();"></textarea>
+			</div>
+
+			<script type='text/javascript'>
+				function encrypt() {
+					switch ($('input[name="encrypt_type"]:checked').val()) {
+						case "aes":
+							$("#encrypt_result").val(CryptoJS.AES.encrypt($("#msg_source").val(), $("#pwd").val()));
+							break;
+						case "des":
+							$("#encrypt_result").val(CryptoJS.DES.encrypt($("#msg_source").val(), $("#pwd").val()));
+							break;
+						case "rabbit":
+							$("#encrypt_result").val(CryptoJS.Rabbit.encrypt($("#msg_source").val(), $("#pwd").val()));
+							break;
+						case "rc4":
+							$("#encrypt_result").val(CryptoJS.RC4.encrypt($("#msg_source").val(), $("#pwd").val()));
+							break;
+						case "tripledes":
+							$("#encrypt_result").val(CryptoJS.TripleDES.encrypt($("#msg_source").val(), $("#pwd").val()));
+							break;
+					}
+				}
+				function decrypt() {
+					switch ($('input[name="encrypt_type"]:checked').val()) {
+						case "aes":
+							$("#msg_source").val(CryptoJS.AES.decrypt($("#encrypt_result").val(), $("#pwd").val()).toString(CryptoJS.enc.Utf8));
+							break;
+						case "des":
+							$("#msg_source").val(CryptoJS.DES.decrypt($("#encrypt_result").val(), $("#pwd").val()).toString(CryptoJS.enc.Utf8));
+							break;
+						case "rabbit":
+							$("#msg_source").val(CryptoJS.Rabbit.decrypt($("#encrypt_result").val(), $("#pwd").val()).toString(CryptoJS.enc.Utf8));
+							break;
+						case "rc4":
+							$("#msg_source").val(CryptoJS.RC4.decrypt($("#encrypt_result").val(), $("#pwd").val()).toString(CryptoJS.enc.Utf8));
+							break;
+						case "tripledes":
+							$("#msg_source").val(CryptoJS.TripleDES.decrypt($("#encrypt_result").val(), $("#pwd").val()).toString(CryptoJS.enc.Utf8));
+							break;
+					}
+				}
+			</script>
+		</div>
+		<script>
+			pagetype=1;//页面
+			$(document).ready(function () {
+				$("#crypto").popover({					
+placement: "bottom", title: "Crypto-JS", content: "Crypto-JS是一个使用JS实现的加密库，提供AES、DES、PBKDF2、SHA、MD5、RC4等多种算法。此工具使用这个库实现。"
+				});
+			});
+		</script>
+	</div>
+	</div>
+</body>
+
+</html>
+<!-- Generated by OSCTools.NET (Fri Dec 29 11:00:19 CST 2017) 4ms -->

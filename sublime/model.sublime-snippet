@@ -1,0 +1,50 @@
+<snippet>
+	<content><![CDATA[
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text;
+/// <summary>
+/// edit by zyx
+/// </summary>
+public class ${1}Model : Model
+{
+    public ${1}Control control;
+
+    //数据
+
+
+    //事件
+
+    public override void OnAppInit()
+   	{
+   		//OpcodeMap.AddCallback(OpCodes_S2C.M2C_CH_PET_TROOP_UPDATE, OnPetTroopUpdate, typeof(PackChPetTroop.M2C_CH_PET_TROOP_UPDATE));
+   	}
+
+   	//重启事件
+   	public override void OnRestart()
+    {
+    }
+
+    #region 通信包处理
+    
+    //获得阵法信息
+    public void SendReq()
+    {
+        PackChPetTroop.C2M_CH_PET_TROOP_GET data = new PackChPetTroop.C2M_CH_PET_TROOP_GET();
+        PluginApp.network.SendProbuf(OpCodes_C2S.C2M_CH_PET_TROOP_GET, data);
+    }
+
+    void SendRecv(object obj)
+    {
+        PackChPetTroop.M2C_CH_PET_TROOP_GET data = obj as  PackChPetTroop.M2C_CH_PET_TROOP_GET;
+    }
+    #endregion
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>1model</tabTrigger>
+	<!-- <tabTrigger>hello</tabTrigger> -->
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>
