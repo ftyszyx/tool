@@ -1,6 +1,7 @@
 import os
 import json
 import xlwt
+import shutil
 
 #dict_keys(['logcat', 'Brand', 'Model', 'pid', 'network info', 'memory info', 'App version', 'pname',
 # 'Manufacturer', 'Rooted', 'open files', 'other threads', 'OS version', 'Kernel version', 'ABI list', 'Start time', 'foreground', 'Build fingerprint', 'App ID', 'Crash type',
@@ -29,7 +30,11 @@ def parseOneFile(filepath):
      return  None
 
 
-def solvepath(filepath,excelpath):
+def solvepath(filepath,outpath):
+    if os.path.exists(outpath):
+        shutil.rmtree(outpath, True)
+    os.mkdir(outpath)
+    excelpath=os.path.join(outpath,"outexcel.xls")
     g=os.walk(filepath)
     workbook = xlwt.Workbook()  # 新建一个工作簿
     sheet = workbook.add_sheet("sheet1")  # 在工
@@ -38,7 +43,9 @@ def solvepath(filepath,excelpath):
     sheet.write(0, 1, "crash_Type")
     sheet.write(0, 2, "version")
     sheet.write(0, 3, "device")
-    sheet.write(0, 4, "log")
+    sheet.write(0, 4, "ABI")
+
+    # sheet.write(0, 4, "log")
 
     #处理所有文件
     row=0
@@ -53,14 +60,15 @@ def solvepath(filepath,excelpath):
                 sheet.write(row, 1, crashitem["Crash type"])
                 sheet.write(row, 2, crashitem["OS version"])
                 sheet.write(row, 3,crashitem["Build fingerprint"])
-                logtext=crashitem["logcat"]
-                if(logtext.__len__()>10000):
-                    logtext=logtext[-9999:]
-                sheet.write(row, 4, logtext)
+                sheet.write(row, 4, crashitem["ABI"])
+                logpath = os.path.join(outpath, (row+1).__str__()+"_.log")
+                f=open(logpath,"w", encoding='utf8')
+                f.write(crashitem["logcat"])
+                f.close()
 
     workbook.save(excelpath)
 
     #生成excel
 
 if __name__=="__main__":
-    solvepath("C:\\Users\\zyx\\Desktop\\crash_202003272","C:\\Users\\zyx\\Desktop\\crashexcel.xls")
+    solvepath("C:\\Users\\zyx\\Desktop\\crash_202003272","C:\\Users\\zyx\\Desktop\\output")
